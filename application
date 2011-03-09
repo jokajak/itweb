@@ -26,15 +26,11 @@ git push libra master</pre>
 	start_response(status, response_headers)
 	return [response_body]
 
-
+#
+# Below for testing only
+#
 if __name__ == '__main__':
 	from wsgiref.simple_server import make_server
-
-	httpd = make_server(
-		'localhost', # The host name.
-		8051, # A port number where to wait for the request.
-		application # Our application object name, in this case a function.
-   )
-
+	httpd = make_server('localhost', 8051, application)
 	# Wait for a single request, serve it and quit.
 	httpd.handle_request()
