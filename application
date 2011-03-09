@@ -1,6 +1,9 @@
 def application(environ, start_response):
 
-   response_body = '''<html><title>Welcome to Libra</title>
+	if environ['PATH_INFO'] == '/health':
+		response_body = "1"
+	else:
+		response_body = '''<html><title>Welcome to Libra</title>
 <body>
 <h1>Welcome to libra</h1>
 <p>Place your application here</p>
@@ -11,10 +14,10 @@ git push libra master</pre>
 </body>
 </html>'''
 
-   status = '200 OK'
-   response_headers = [('Content-Type', 'text/plain'),
+	status = '200 OK'
+	response_headers = [('Content-Type', 'text/plain'),
                        ('Content-Length', str(len(response_body)))]
    # 
-   start_response(status, response_headers)
-   return [response_body]
+	start_response(status, response_headers)
+	return [response_body]
 
