@@ -1,36 +1,16 @@
-def application(environ, start_response):
-
-	ctype = 'text/plain'
-	if environ['PATH_INFO'] == '/health':
-		response_body = "1"
-	elif environ['PATH_INFO'] == '/env':
-		response_body = ['%s: %s' % (key, value)
-                    for key, value in sorted(environ.items())]
-		response_body = '\n'.join(response_body)
-	else:
-		ctype = 'text/html'
-		response_body = '''<html><title>Welcome to OpenShift</title>
-<body>
-<h1>Welcome to OpenShift</h1>
-<p>Place your application here</p>
-<p>In order to commit to your new project, go to your projects git repo (created with the create_http command).  Make your changes, then run:</p>
-<pre>git commit -a -m 'Some commit message'
-git push</pre>
-<p>Then reload this page</p>
-</body>
-</html>'''
-
-	status = '200 OK'
-	response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
-	#
-	start_response(status, response_headers)
-	return [response_body]
-
-#
-# Below for testing only
-#
+import os
+here = os.path.dirname(os.path.abspath(__file__))
+os.environ['PYTHON_EGG_CACHE'] = os.path.join(here, '..', 'data', 'python-eggs')
+ 
+virtualenv = os.path.join(here, '..', 'data/env/bin/activate_this.py')
+execfile(virtualenv, dict(__file__=virtualenv))
+ 
+from paste.deploy import loadapp
+itweb = os.path.join(here, '..', 'libs', 'itweb')
+application = loadapp('config:development.ini', relative_to=itweb)
+ 
 if __name__ == '__main__':
-	from wsgiref.simple_server import make_server
-	httpd = make_server('localhost', 8051, application)
-	# Wait for a single request, serve it and quit.
-	httpd.handle_request()
+    from wsgiref.simple_server import make_server
+    httpd = make_server('localhost', 8051, application)
+    # Wait for a single request, serve it and quit.
+    httpd.handle_request()

@@ -1,0 +1,4 @@
+recursive-include itweb/public *
+include itweb/public/favicon.ico
+recursive-include itweb/i18n *
+recursive-include itweb/templates *
