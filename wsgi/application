@@ -1,14 +1,27 @@
 import os
 here = os.path.dirname(os.path.abspath(__file__))
 os.environ['PYTHON_EGG_CACHE'] = os.path.join(here, '..', 'data', 'python-eggs')
- 
+
 virtualenv = os.path.join(here, '..', 'data/env/bin/activate_this.py')
 execfile(virtualenv, dict(__file__=virtualenv))
- 
+
 from paste.deploy import loadapp
 itweb = os.path.join(here, '..', 'libs', 'itweb')
-application = loadapp('config:development.ini', relative_to=itweb)
- 
+#application = loadapp('config:development.ini', relative_to=itweb)
+def application(environ, start_response):
+    status = '200 OK'
+    output = 'Hello World!'
+
+    print >> environ['wsgi.errors'], "application debug #1"
+
+    response_headers = [('Content-type', 'text/plain'),
+                        ('Content-Length', str(len(output)))]
+    start_response(status, response_headers)
+
+    print >> environ['wsgi.errors'], "application debug #2"
+
+    return [output]
+
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
     httpd = make_server('localhost', 8051, application)
