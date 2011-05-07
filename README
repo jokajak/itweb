@@ -1,1 +1,19 @@
 ITWeb is a turbogears based application for managing small IT infrastructure.
+=======
+Feel free to change or remove this file, it is informational only.
+
+Repo layout
+===========
+wsgi/ - Externally exposed wsgi code goes
+libs/ - Additional libraries
+data/ - For not-externally exposed wsgi code
+
+
+Notes about layout
+==================
+Please leave wsgi, libs and data directories but feel free to create additional
+directories if needed.
+
+Note: Every time you push, everything in your remote repo dir gets recreated
+please store long term items (like an sqlite database) in ../data which will
+persist between pushes of your repo.

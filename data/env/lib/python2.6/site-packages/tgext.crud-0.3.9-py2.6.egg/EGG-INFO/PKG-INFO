@@ -1,0 +1,37 @@
+Metadata-Version: 1.0
+Name: tgext.crud
+Version: 0.3.9
+Summary: Crud Controller Extension for TG2
+Home-page: UNKNOWN
+Author: Christopher Perkins
+Author-email: chris@percious.com
+License: MIT
+Description: Introduction
+        ============
+        
+        0.3 (Sept. 30, 2009
+        ----------------------
+        
+        * Mako template support
+        * Title template fixes
+        * Provider session bug fixed 
+        * TW 0.9.7.2 support
+        * Pagination added.
+        
+        0.2.x
+        ------
+        Prehistory (should have kept better logs)
+        
+        Changelog
+        =========
+        
+        0.1 - Unreleased
+        ----------------
+        
+        * Initial release
+        
+        
+Keywords: TG,TG2,REST,sprox
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
