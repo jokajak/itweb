@@ -14,6 +14,8 @@ from itweb.controllers.secure import SecureController
 
 from itweb.controllers.error import ErrorController
 
+from itweb.controllers.component import ComponentTypeController, ComponentController
+
 __all__ = ['RootController']
 
 
@@ -34,6 +36,10 @@ class RootController(BaseController):
     secc = SecureController()
 
     admin = AdminController(model, DBSession, config_type=TGAdminConfig)
+
+    componenttype = ComponentTypeController(DBSession)
+
+    component = ComponentController(DBSession)
 
     error = ErrorController()
 
