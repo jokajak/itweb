@@ -13,6 +13,13 @@ class TestGroup(ModelTest):
         display_name = u"Test Group"
         )
 
+    def test_obj_repr(self):
+        """The obj has a proper string representation"""
+        eq_(repr(self.obj), "<Group: name=test_group>")
+
+    def test_obj_unicode(self):
+        """The obj can be converted to a unicode string"""
+        eq_(unicode(self.obj), u"test_group")
 
 class TestUser(ModelTest):
     """Unit test case for the ``User`` model."""
@@ -39,6 +46,14 @@ class TestUser(ModelTest):
         """Users should be fetcheable by their email addresses"""
         him = model.User.by_email_address(u"ignucius@example.org")
         eq_(him, self.obj)
+
+    def test_obj_repr(self):
+        """The obj has a proper string representation"""
+        eq_(repr(self.obj), "<User: name=ignucius, email=ignucius@example.org, display=ignucius>")
+
+    def test_obj_unicode(self):
+        """The obj can be converted to a unicode string"""
+        eq_(unicode(self.obj), u"ignucius")
 
 
 class TestPermission(ModelTest):
