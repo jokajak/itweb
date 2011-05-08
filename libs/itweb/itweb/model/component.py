@@ -16,7 +16,7 @@ class ComponentType(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
 
-    ctype = Column(Unicode(255), nullable=False)
+    type = Column(Unicode(100), nullable=False)
 
     #}
 
@@ -27,15 +27,15 @@ class Component(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
 
-    ctype_id = Column(Integer, ForeignKey('componenttypes.id'))
+    type_id = Column(Integer, ForeignKey('componenttypes.id'))
 
-    ctype = relation(ComponentType, backref=backref('components', order_by=id))
+    type = relation(ComponentType, backref=backref('components', order_by=id))
 
-    manufacturer = Column(Unicode(255), nullable=False)
+    manufacturer = Column(Unicode(100), nullable=False)
 
     description = Column(Unicode(255), nullable=False)
 
-    model = Column(Unicode(255), nullable=False)
+    model = Column(Unicode(100), nullable=False)
 
     sanitization = Column(Unicode(255), nullable=False)
 
