@@ -23,7 +23,9 @@ class ComponentType(DeclarativeBase):
 class Component(DeclarativeBase):
     __tablename__ = 'components'
     __table_args__ = (
-            UniqueConstraint('type', 'manufacturer', 'model')
+            UniqueConstraint('manufacturer', 'model'),
+            None,
+            {}
             )
 
     #{ Columns
