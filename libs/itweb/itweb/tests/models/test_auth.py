@@ -49,7 +49,7 @@ class TestUser(ModelTest):
 
     def test_obj_repr(self):
         """The obj has a proper string representation"""
-        eq_(repr(self.obj), "<User: name=ignucius, email=ignucius@example.org, display=None>")
+        eq_(repr(self.obj), "<User: name=u'ignucius', email=u'ignucius@example.org', display=None>")
 
     def test_obj_unicode(self):
         """The obj can be converted to a unicode string"""
