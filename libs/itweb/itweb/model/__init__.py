@@ -61,3 +61,4 @@ def init_model(engine):
 # Import your model modules here.
 from itweb.model.auth import User, Group, Permission
 from itweb.model.component import ComponentType, Component
+from itweb.model.network import Network, IPAddress, DNSEntry
