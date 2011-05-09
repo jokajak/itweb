@@ -1,9 +1,10 @@
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import mapper, class_mapper, attributes, object_mapper
 from sqlalchemy.orm.exc import UnmappedClassError, UnmappedColumnError
-from sqlalchemy import Table, Column, ForeignKeyConstraint, Integer
+from sqlalchemy import Table, Column, ForeignKeyConstraint, Integer, DateTime
 from sqlalchemy.orm.interfaces import SessionExtension
 from sqlalchemy.orm.properties import RelationshipProperty
+import datetime
 
 def col_references_table(col, table):
     for fk in col.foreign_keys:
@@ -80,7 +81,7 @@ def _history_mapper(local_mapper):
 
     if not super_history_mapper:
         cls.version = Column('version', Integer, default=1, nullable=False)
-        cls.timestamp = Column('timestamp', DateTime, default=utc.now(), nullable=False)
+        cls.timestamp = Column('timestamp', DateTime, default=datetime.datetime.utcnow(), nullable=False)
         cls.user_id = Column('user_id', Integer, nullable=False)
 
 
