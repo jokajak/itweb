@@ -8,7 +8,7 @@ from sqlalchemy.types import Integer, Unicode, DateTime
 from sqlalchemy.orm import relation, backref
 
 from itweb.model import DeclarativeBase, metadata, DBSession
-from itweb.lib.history_meta import VersionedMeta, VersionedListener
+from itweb.lib.history_meta import VersionedMeta
 
 
 class Network(DeclarativeBase):
