@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import mapper, class_mapper, attributes, object_mapper
 from sqlalchemy.orm.exc import UnmappedClassError, UnmappedColumnError
-from sqlalchemy import Table, Column, ForeignKeyConstraint, Integer, DateTime
+from sqlalchemy import Table, Column, ForeignKeyConstraint, Integer, DateTime, ForeignKey
 from sqlalchemy.orm.interfaces import SessionExtension
 from sqlalchemy.orm.properties import RelationshipProperty
 from tg import request
@@ -48,11 +48,11 @@ def _history_mapper(local_mapper):
             super_fks.append(('version', super_history_mapper.base_mapper.local_table.c.version))
             cols.append(Column('version', Integer, primary_key=True))
             cols.append(Column('timestamp', DateTime, default=datetime.datetime.utcnow(), nullable=False))
-            cols.append(Column('user_id', Integer, nullable=False))
+            cols.append(Column('user_id', Integer, ForeignKey('user.user_id'), nullable=False))
         else:
             cols.append(Column('version', Integer, primary_key=True))
             cols.append(Column('timestamp', DateTime, default=datetime.datetime.utcnow(), nullable=False))
-            cols.append(Column('user_id', Integer, nullable=False))
+            cols.append(Column('user_id', Integer, ForeignKey('user.user_id'), nullable=False))
 
         if super_fks:
             cols.append(ForeignKeyConstraint(*zip(*super_fks)))
