@@ -8,7 +8,7 @@ from sqlalchemy.types import Integer, Unicode
 from sqlalchemy.orm import relation, backref
 
 from itweb.model import DeclarativeBase, metadata, DBSession
-from itweb.lib.history_meta import VersionedMeta, VersionedListener
+from itweb.lib.history_meta import VersionedMeta
 
 class ComponentType(DeclarativeBase):
     __tablename__ = 'componenttypes'
