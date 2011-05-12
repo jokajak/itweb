@@ -1,9 +1,11 @@
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import mapper, class_mapper, attributes, object_mapper
 from sqlalchemy.orm.exc import UnmappedClassError, UnmappedColumnError
-from sqlalchemy import Table, Column, ForeignKeyConstraint, Integer
+from sqlalchemy import Table, Column, ForeignKeyConstraint, Integer, DateTime
 from sqlalchemy.orm.interfaces import SessionExtension
 from sqlalchemy.orm.properties import RelationshipProperty
+from tg import request
+import datetime
 
 def col_references_table(col, table):
     for fk in col.foreign_keys:
@@ -28,7 +30,7 @@ def _history_mapper(local_mapper):
     if not super_mapper or local_mapper.local_table is not super_mapper.local_table:
         cols = []
         for column in local_mapper.local_table.c:
-            if column.name == 'version':
+            if column.name == 'version' or column.name == 'timestamp' or column.name == 'user_id':
                 continue
 
             col = column.copy()
@@ -45,8 +47,12 @@ def _history_mapper(local_mapper):
         if super_mapper:
             super_fks.append(('version', super_history_mapper.base_mapper.local_table.c.version))
             cols.append(Column('version', Integer, primary_key=True))
+            cols.append(Column('timestamp', DateTime, default=datetime.datetime.utcnow(), nullable=False))
+            cols.append(Column('user_id', Integer, nullable=False))
         else:
             cols.append(Column('version', Integer, primary_key=True))
+            cols.append(Column('timestamp', DateTime, default=datetime.datetime.utcnow(), nullable=False))
+            cols.append(Column('user_id', Integer, nullable=False))
 
         if super_fks:
             cols.append(ForeignKeyConstraint(*zip(*super_fks)))
@@ -114,7 +120,7 @@ def create_version(obj, session, deleted = False):
             continue
 
         for hist_col in hm.local_table.c:
-            if hist_col.key == 'version':
+            if hist_col.key == 'version' or hist_col.key == 'timestamp' or hist_col.key == 'user_id':
                 continue
 
             obj_col = om.local_table.c[hist_col.key]
@@ -162,6 +168,8 @@ def create_version(obj, session, deleted = False):
         return
 
     attr['version'] = obj.version
+    userid = request.identity['user'].user_id
+    attr['user_id'] = userid
     hist = history_cls()
     for key, value in attr.iteritems():
         setattr(hist, key, value)
