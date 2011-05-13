@@ -19,9 +19,11 @@ class Network(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
 
-    netaddr = Column(String(100), nullable=False)
+    netaddr = Column(String(128), nullable=False)
 
-    prefix = Column(String(100), nullable=False)
+    prefix = Column(String(128), nullable=False)
+
+    notes = Column(Unicode(255), nullable=True)
 
     #}
 
@@ -33,14 +35,15 @@ class IPAddress(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
 
-    ipaddr = Column(String(100), nullable=False)
+    ipaddr = Column(String(128), nullable=False)
 
-    mac = Column(String(100), nullable=True)
+    mac = Column(String(128), nullable=True)
 
     network_id = Column(Integer, ForeignKey('networks.id'))
 
     network = relation(Network, backref=backref('ips', order_by=id))
 
+    notes = Column(Unicode(255), nullable=True)
     #}
 
 class DNSEntry(DeclarativeBase):
@@ -64,4 +67,5 @@ class DNSEntry(DeclarativeBase):
 
     type = Column(Integer, nullable=False)
 
+    notes = Column(Unicode(255), nullable=True)
     #}
