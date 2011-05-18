@@ -78,3 +78,9 @@ class TestRootController(TestController):
         """Anonymous users must not access the secure controller"""
         self.app.get('/secc', status=401)
         # It's enough to know that authorization was denied with a 401 status
+
+    def test_about(self):
+        """The about page can be displayed"""
+        response = self.app.get('/about.html')
+        assert_true('<h2>Architectural basics'
+                    ' of a quickstart TG2 site.</h2>' in response)
