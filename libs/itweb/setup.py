@@ -36,7 +36,6 @@ setup(
         "tgext.admin>=0.3.9",
         "tw.forms",
         "coverage",
-        "tw.dojo",
         "tgext.crud",
         "sqlalchemy-migrate",
         ],
