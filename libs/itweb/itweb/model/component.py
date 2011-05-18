@@ -8,9 +8,11 @@ from sqlalchemy.types import Integer, Unicode
 from sqlalchemy.orm import relation, backref
 
 from itweb.model import DeclarativeBase, metadata, DBSession
+from itweb.lib.history_meta import VersionedMeta
 
 class ComponentType(DeclarativeBase):
     __tablename__ = 'componenttypes'
+    __metaclass__ = VersionedMeta
 
     #{ Columns
 
@@ -21,7 +23,13 @@ class ComponentType(DeclarativeBase):
     #}
 
 class Component(DeclarativeBase):
+    __metaclass__ = VersionedMeta
     __tablename__ = 'components'
+    __table_args__ = (
+            UniqueConstraint('manufacturer', 'model'),
+            None,
+            {}
+            )
 
     #{ Columns
 

@@ -42,8 +42,8 @@ group_permission_table = Table('tg_group_permission', metadata,
 
 # This is the association table for the many-to-many relationship between
 # groups and members - this is, the memberships. It's required by repoze.what.
-user_group_table = Table('tg_user_group', metadata,
-    Column('user_id', Integer, ForeignKey('tg_user.user_id',
+user_group_table = Table('user_group', metadata,
+    Column('user_id', Integer, ForeignKey('user.user_id',
         onupdate="CASCADE", ondelete="CASCADE"), primary_key=True),
     Column('group_id', Integer, ForeignKey('tg_group.group_id',
         onupdate="CASCADE", ondelete="CASCADE"), primary_key=True)
@@ -99,7 +99,7 @@ class User(DeclarativeBase):
     least the ``user_name`` column.
 
     """
-    __tablename__ = 'tg_user'
+    __tablename__ = 'user'
 
     #{ Columns
 

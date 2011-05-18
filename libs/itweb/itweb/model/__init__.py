@@ -5,11 +5,12 @@ from zope.sqlalchemy import ZopeTransactionExtension
 from sqlalchemy.orm import scoped_session, sessionmaker
 #from sqlalchemy import MetaData
 from sqlalchemy.ext.declarative import declarative_base
+from itweb.lib.history_meta import VersionedListener
 
 # Global session manager: DBSession() returns the Thread-local
 # session object appropriate for the current web request.
 maker = sessionmaker(autoflush=True, autocommit=False,
-                     extension=ZopeTransactionExtension())
+                     extension=[ZopeTransactionExtension(), VersionedListener()])
 DBSession = scoped_session(maker)
 
 # Base class for all of our model classes: By default, the data model is
@@ -61,3 +62,4 @@ def init_model(engine):
 # Import your model modules here.
 from itweb.model.auth import User, Group, Permission
 from itweb.model.component import ComponentType, Component
+from itweb.model.network import Network, IPAddress, DNSEntry

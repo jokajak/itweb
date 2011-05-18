@@ -15,6 +15,7 @@ from itweb.controllers.secure import SecureController
 from itweb.controllers.error import ErrorController
 
 from itweb.controllers.component import ComponentTypeController, ComponentController
+from itweb.controllers.network import NetworkController
 
 __all__ = ['RootController']
 
@@ -40,6 +41,8 @@ class RootController(BaseController):
     componenttype = ComponentTypeController(DBSession)
 
     component = ComponentController(DBSession)
+
+    networks = NetworkController(DBSession)
 
     error = ErrorController()
 
