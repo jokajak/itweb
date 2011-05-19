@@ -10,16 +10,32 @@ import itweb.lib.ipaddr as ipaddr
 
 class IPAddress(FancyValidator):
     messages = {
-            'bad ip': '%(address) does not appear to be an IPv4 or IPv6'
+            'bad ip': '%s does not appear to be an IPv4 or IPv6'
             ' address',
         }
     def _to_python(self, value, state):
-        return value.strip()
-    def validate_python(self, value, state):
+        val = None
+        # remove spaces from the string
         try:
-            ip = ipaddr.IPAddress(value)
-        except AddressValueError:
-            raise Invalid(self.message('bad ip', state, address=value))
+            val = value.strip()
+        except AttributeError:
+            pass
+        # try converting it to a number first
+        try:
+            if val:
+                val = long(val)
+            else:
+                val = long(value)
+        except ValueError:
+            pass
+        # see if val is defined and try to convert it
+        if not val:
+            val = value
+        try:
+            ip = ipaddr.IPAddress(val)
+        except ValueError:
+            raise Invalid(self.message('bad ip', state, address=value), value, state)
+        return ip
 
 def validate_network(form_values, state, validator):
     netaddr = form_values.get('netaddr')
